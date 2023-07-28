@@ -11,7 +11,7 @@ Betaria is a Minecraft Beta 1.7.3 mod that transforms the game into Terraria. Fe
 ## Sound Setup
 For custom audio to work properly in this mod, a valid copy of Terraria 1.4+ is required to extract assets from using [TExtract](https://forums.terraria.org/index.php?threads/textract-extract-terrarias-images-sound-effects-and-music.937/). The version of TExtract used must not have names for Journey's End tracks, in case such a version exists. In the `Content` folder, there is a `Wave Bank` folder and a `Sounds` folder. These two folders need to be copied to `.minecraft/resources` and renamed to `tmusic` and `tsounds` respectively. If a warning does not appear upon playing this mod, the audio extraction was successful.
 
-If TExtract hangs around on loading fonts, go to the folder where you installed Terraria (with Steam on Windows, this is `C:/Program Files (x86)/Steam/steamapps/common/Terraria`), rename the `Fonts` folder inside the `Content` folder to something random and try again.
+If TExtract hangs around on loading fonts, go to the folder where you installed Terraria (with Steam on Windows, this is `C:/Program Files (x86)/Steam/steamapps/common/Terraria`), move the `Fonts` folder out of the `Content` folder to something random and try again.
 
 Alongside this, there are a few custom tracks that can be added too as OGGs or WAVs:
 - `Custom_DesertNight`: Plays at night in a desert
