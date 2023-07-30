@@ -1818,7 +1818,7 @@
  
  public class CraftingManager {
  	private static final CraftingManager instance = new CraftingManager();
-@@ -45,14 +42,16 @@
+@@ -45,17 +42,19 @@
  		this.addRecipe(new ItemStack(Item.cake, 1), new Object[]{"AAA", "BEB", "CCC", Character.valueOf('A'), Item.bucketMilk, Character.valueOf('B'), Item.sugar, Character.valueOf('C'), Item.wheat, Character.valueOf('E'), Item.egg});
  		this.addRecipe(new ItemStack(Item.sugar, 1), new Object[]{"#", Character.valueOf('#'), Item.reed});
  		this.addRecipe(new ItemStack(Block.planks, 4), new Object[]{"#", Character.valueOf('#'), Block.wood});
@@ -1829,14 +1829,20 @@
 +		this.addRecipe(new ItemStack(Block.torchWood, 4), new Object[]{"X", "#", Character.valueOf('X'), Item.slimeBall, Character.valueOf('#'), Item.stick});
  		this.addRecipe(new ItemStack(Item.bowlEmpty, 4), new Object[]{"# #", " # ", Character.valueOf('#'), Block.planks});
 -		this.addRecipe(new ItemStack(Block.rail, 16), new Object[]{"X X", "X#X", "X X", Character.valueOf('X'), Item.ingotIron, Character.valueOf('#'), Item.stick});
+-		this.addRecipe(new ItemStack(Block.railPowered, 6), new Object[]{"X X", "X#X", "XRX", Character.valueOf('X'), Item.ingotGold, Character.valueOf('R'), Item.redstone, Character.valueOf('#'), Item.stick});
 +		this.addShapelessRecipe(new ItemStack(Block.rail, 16), Item.ingotIron, Item.stick).requireBlock(Block.workbench);
- 		this.addRecipe(new ItemStack(Block.railPowered, 6), new Object[]{"X X", "X#X", "XRX", Character.valueOf('X'), Item.ingotGold, Character.valueOf('R'), Item.redstone, Character.valueOf('#'), Item.stick});
++//		this.addRecipe(new ItemStack(Block.railPowered, 6), new Object[]{"X X", "X#X", "XRX", Character.valueOf('X'), Item.ingotGold, Character.valueOf('R'), Item.redstone, Character.valueOf('#'), Item.stick});
  		this.addRecipe(new ItemStack(Block.railDetector, 6), new Object[]{"X X", "X#X", "XRX", Character.valueOf('X'), Item.ingotIron, Character.valueOf('R'), Item.redstone, Character.valueOf('#'), Block.pressurePlateStone});
 -		this.addRecipe(new ItemStack(Item.minecartEmpty, 1), new Object[]{"# #", "###", Character.valueOf('#'), Item.ingotIron});
 +		this.addShapelessRecipe(new ItemStack(Item.minecartEmpty, 1), new ItemStack(Item.ingotIron, 15), new ItemStack(Block.planks, 10)).requireBlock(Block.workbench);
  		this.addRecipe(new ItemStack(Block.pumpkinLantern, 1), new Object[]{"A", "B", Character.valueOf('A'), Block.pumpkin, Character.valueOf('B'), Block.torchWood});
- 		this.addRecipe(new ItemStack(Item.minecartCrate, 1), new Object[]{"A", "B", Character.valueOf('A'), Block.chest, Character.valueOf('B'), Item.minecartEmpty});
- 		this.addRecipe(new ItemStack(Item.minecartPowered, 1), new Object[]{"A", "B", Character.valueOf('A'), Block.stoneOvenIdle, Character.valueOf('B'), Item.minecartEmpty});
+-		this.addRecipe(new ItemStack(Item.minecartCrate, 1), new Object[]{"A", "B", Character.valueOf('A'), Block.chest, Character.valueOf('B'), Item.minecartEmpty});
+-		this.addRecipe(new ItemStack(Item.minecartPowered, 1), new Object[]{"A", "B", Character.valueOf('A'), Block.stoneOvenIdle, Character.valueOf('B'), Item.minecartEmpty});
++//		this.addRecipe(new ItemStack(Item.minecartCrate, 1), new Object[]{"A", "B", Character.valueOf('A'), Block.chest, Character.valueOf('B'), Item.minecartEmpty});
++//		this.addRecipe(new ItemStack(Item.minecartPowered, 1), new Object[]{"A", "B", Character.valueOf('A'), Block.stoneOvenIdle, Character.valueOf('B'), Item.minecartEmpty});
+ 		this.addRecipe(new ItemStack(Item.boat, 1), new Object[]{"# #", "###", Character.valueOf('#'), Block.planks});
+ 		this.addRecipe(new ItemStack(Item.bucketEmpty, 1), new Object[]{"# #", " # ", Character.valueOf('#'), Item.ingotIron});
+ 		this.addRecipe(new ItemStack(Item.flintAndSteel, 1), new Object[]{"A ", " B", Character.valueOf('A'), Item.ingotIron, Character.valueOf('B'), Item.flint});
 @@ -77,7 +76,19 @@
  		this.addRecipe(new ItemStack(Block.dispenser, 1), new Object[]{"###", "#X#", "#R#", Character.valueOf('#'), Block.cobblestone, Character.valueOf('X'), Item.bow, Character.valueOf('R'), Item.redstone});
  		this.addRecipe(new ItemStack(Block.pistonBase, 1), new Object[]{"TTT", "#X#", "#R#", Character.valueOf('#'), Block.cobblestone, Character.valueOf('X'), Item.ingotIron, Character.valueOf('R'), Item.redstone, Character.valueOf('T'), Block.planks});
@@ -2977,6 +2983,34 @@
 +		return true;
 +	}
 +}
+--- net/minecraft/src/BlockStairs.java
++++ net/minecraft/src/BlockStairs.java
+@@ -90,14 +90,6 @@
+ 		return this.modelBlock.getRenderBlockPass();
+ 	}
+ 
+-	public int idDropped(int var1, Random var2) {
+-		return this.modelBlock.idDropped(var1, var2);
+-	}
+-
+-	public int quantityDropped(Random var1) {
+-		return this.modelBlock.quantityDropped(var1);
+-	}
+-
+ 	public int getBlockTextureFromSideAndMetadata(int var1, int var2) {
+ 		return this.modelBlock.getBlockTextureFromSideAndMetadata(var1, var2);
+ 	}
+@@ -141,10 +133,6 @@
+ 
+ 	public void onBlockRemoval(World var1, int var2, int var3, int var4) {
+ 		this.modelBlock.onBlockRemoval(var1, var2, var3, var4);
+-	}
+-
+-	public void dropBlockAsItemWithChance(World var1, int var2, int var3, int var4, int var5, float var6) {
+-		this.modelBlock.dropBlockAsItemWithChance(var1, var2, var3, var4, var5, var6);
+ 	}
+ 
+ 	public void onEntityWalking(World var1, int var2, int var3, int var4, Entity var5) {
 --- net/minecraft/src/RecipesArmor.java
 +++ net/minecraft/src/RecipesArmor.java
 @@ -1,8 +1,8 @@
@@ -3219,7 +3253,7 @@
 +		EMERALD.setHarvestLevel(2).setEfficiencyOnProperMaterial(8.0F)
 +				.setDamageVsEntity(15).setSpeedVsEntity(6)
 +				.setShortDamageVsEntity(12).setShortSpeedVsEntity(4)
-+				.setRenderIndex(4).setDefenseValues(4, 5, 4, 3);
++				.setRenderIndex(3).setDefenseValues(4, 5, 4, 3);
 +	}
 +
 +	private int harvestLevel;
@@ -4156,7 +4190,7 @@
  	}
  
  	public void closeScreen() {
-@@ -115,19 +170,21 @@
+@@ -115,19 +170,22 @@
  	}
  
  	public void displayGUIChest(IInventory var1) {
@@ -4168,6 +4202,7 @@
  
  	public void displayWorkbenchGUI(int var1, int var2, int var3) {
 -		this.mc.displayGuiScreen(new GuiCrafting(this.inventory, this.worldObj, var1, var2, var3));
++		this.mc.displayGuiScreen(new GuiInventory(this));
  	}
  
  	public void displayGUIFurnace(TileEntityFurnace var1) {
@@ -4602,7 +4637,7 @@
  
 --- net/minecraft/src/BlockWorkbench.java
 +++ net/minecraft/src/BlockWorkbench.java
-@@ -4,18 +4,19 @@
+@@ -4,18 +4,24 @@
  	protected BlockWorkbench(int var1) {
  		super(var1, Material.wood);
  		this.blockIndexInTexture = 59;
@@ -4613,13 +4648,6 @@
  		return var1 == 1 ? this.blockIndexInTexture - 16 : (var1 == 0 ? Block.planks.getBlockTextureFromSide(0) : (var1 != 2 && var1 != 4 ? this.blockIndexInTexture : this.blockIndexInTexture + 1));
  	}
  
--	public boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {
--		if(var1.multiplayerWorld) {
--			return true;
--		} else {
--			var5.displayWorkbenchGUI(var2, var3, var4);
--			return true;
--		}
 +	public boolean shouldSideBeRendered(IBlockAccess var1, int var2, int var3, int var4, int var5) {
 +		if (var5 == 0) return false;
 +		return super.shouldSideBeRendered(var1, var2, var3, var4, var5);
@@ -4627,6 +4655,17 @@
 +
 +	public boolean isOpaqueCube() {
 +		return false;
++	}
++
+ 	public boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {
+-		if(var1.multiplayerWorld) {
+-			return true;
+-		} else {
+-			var5.displayWorkbenchGUI(var2, var3, var4);
+-			return true;
+-		}
++		var5.displayWorkbenchGUI(var2, var3, var4);
++		return true;
  	}
  }
 --- net/minecraft/src/RenderGlobal.java
@@ -5023,6 +5062,29 @@
  	}
  
  	public void onInventoryChanged() {
+--- net/minecraft/src/BlockRail.java
++++ net/minecraft/src/BlockRail.java
+@@ -247,4 +247,20 @@
+ 	static boolean isPoweredBlockRail(BlockRail var0) {
+ 		return var0.isPowered;
+ 	}
++
++	public boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {
++		if(!var1.multiplayerWorld) {
++			EntityMinecart minecart = new EntityMinecart(var1, ((float)var2 + 0.5F), ((float)var3 + 0.5F), ((float)var4 + 0.5F), 0);
++//			if (var5.inventory.getCurrentItem() == null || !(var5.inventory.getCurrentItem().getItem() instanceof ItemMinecart)) {
++			if (!var5.inventory.hasStackedItem(new ItemStack(Item.minecartEmpty))) {
++				minecart.makeSlow();
++			}
++
++			var1.entityJoinedWorld(minecart);
++			var1.playSoundAtEntity(minecart, "Item_53", 1.0F, 1.0F);
++			minecart.interact(var5);
++		}
++
++		return true;
++	}
+ }
 --- net/minecraft/src/ItemStack.java
 +++ net/minecraft/src/ItemStack.java
 @@ -81,7 +81,7 @@
@@ -5467,7 +5529,7 @@
  
  public class RecipesIngots {
 -	private Object[][] recipeItems = new Object[][]{{Block.blockGold, new ItemStack(Item.ingotGold, 9)}, {Block.blockSteel, new ItemStack(Item.ingotIron, 9)}, {Block.blockDiamond, new ItemStack(Item.diamond, 9)}, {Block.blockLapis, new ItemStack(Item.dyePowder, 9, 4)}};
-+	private Object[][] recipeItems = new Object[][]{{Block.blockGold, new ItemStack(Item.ingotGold)}, {Block.blockSteel, new ItemStack(Item.ingotIron)}, {Block.blockDiamond, new ItemStack(Item.diamond)}, {Block.blockLapis, new ItemStack(Item.dyePowder, 1, 4)}, {Block.blockCopper, new ItemStack(Item.ingotCopper)}};
++	private Object[][] recipeItems = new Object[][]{{Block.blockGold, new ItemStack(Block.oreGold)}, {Block.blockSteel, new ItemStack(Block.oreIron)}, {Block.blockDiamond, new ItemStack(Block.oreDiamond)}, {Block.blockLapis, new ItemStack(Item.dyePowder, 1, 4)}, {Block.blockCopper, new ItemStack(Block.oreCopper)}};
  
  	public void addRecipes(CraftingManager var1) {
  		for(int var2 = 0; var2 < this.recipeItems.length; ++var2) {
@@ -7530,12 +7592,10 @@
  	}
  
  	public void onBlockPlacedBy(World var1, int var2, int var3, int var4, EntityLiving var5) {
-@@ -137,37 +107,5 @@
- 			var1.setBlockMetadataWithNotify(var2, var3, var4, 4);
- 		}
+@@ -139,35 +109,8 @@
  
--	}
--
+ 	}
+ 
 -	public void onBlockRemoval(World var1, int var2, int var3, int var4) {
 -		if(!keepFurnaceInventory) {
 -			TileEntityFurnace var5 = (TileEntityFurnace)var1.getBlockTileEntity(var2, var3, var4);
@@ -7566,6 +7626,9 @@
 -		}
 -
 -		super.onBlockRemoval(var1, var2, var3, var4);
++	public boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {
++		var5.displayWorkbenchGUI(var2, var3, var4);
++		return true;
  	}
  }
 --- net/minecraft/src/ShapelessRecipes.java
@@ -8243,7 +8306,7 @@
  				var1.setBlockWithNotify(var2, var3, var4, 0);
 --- net/minecraft/src/ItemMinecart.java
 +++ net/minecraft/src/ItemMinecart.java
-@@ -13,7 +13,10 @@
+@@ -13,10 +13,12 @@
  		int var8 = var3.getBlockId(var4, var5, var6);
  		if(BlockRail.isRailBlock(var8)) {
  			if(!var3.multiplayerWorld) {
@@ -8252,9 +8315,13 @@
 +				var3.entityJoinedWorld(minecart);
 +				var3.playSoundAtEntity(minecart, "Item_53", 1.0F, 1.0F);
 +				minecart.interact(var2);
++				System.out.println("gotta go fast");
  			}
- 
- 			--var1.stackSize;
+-
+-			--var1.stackSize;
+ 			return true;
+ 		} else {
+ 			return false;
 --- /dev/null
 +++ net/minecraft/src/StepSoundGrass.java
 @@ -1,0 +1,19 @@
@@ -8565,7 +8632,35 @@
  				GL11.glDisable(GL11.GL_LIGHTING);
 --- net/minecraft/src/EntityMinecart.java
 +++ net/minecraft/src/EntityMinecart.java
-@@ -162,6 +162,12 @@
+@@ -22,6 +22,7 @@
+ 	private double field_9409_q;
+ 	private double field_9408_r;
+ 	private double field_9407_s;
++	private boolean slow;
+ 
+ 	public EntityMinecart(World var1) {
+ 		super(var1);
+@@ -35,6 +36,11 @@
+ 		this.yOffset = this.height / 2.0F;
+ 	}
+ 
++	public EntityMinecart makeSlow() {
++		this.slow = true;
++		return this;
++	}
++
+ 	protected boolean canTriggerWalking() {
+ 		return false;
+ 	}
+@@ -82,7 +88,6 @@
+ 				}
+ 
+ 				this.setEntityDead();
+-				this.dropItemWithOffset(Item.minecartEmpty.shiftedIndex, 1, 0.0F);
+ 				if(this.minecartType == 1) {
+ 					EntityMinecart var3 = this;
+ 
+@@ -162,6 +167,12 @@
  	}
  
  	public void onUpdate() {
@@ -8578,7 +8673,16 @@
  		if(this.minecartTimeSinceHit > 0) {
  			--this.minecartTimeSinceHit;
  		}
-@@ -216,11 +222,24 @@
+@@ -206,7 +217,7 @@
+ 				--var2;
+ 			}
+ 
+-			double var4 = 0.4D;
++			double var4 = this.slow ? 0.3D : 0.5D;
+ 			boolean var6 = false;
+ 			var7 = 1.0D / 128.0D;
+ 			int var9 = this.worldObj.getBlockId(var1, var2, var3);
+@@ -216,11 +227,31 @@
  				this.posY = (double)var2;
  				boolean var12 = false;
  				boolean var13 = false;
@@ -8598,14 +8702,44 @@
 +				if (pushForward && this.motionX == 0.0D && this.motionZ == 0.0D) {
 +					float var5 = MathHelper.sin(this.riddenByEntity.rotationYaw * (float)Math.PI / 180.0F);
 +					float var5a = MathHelper.cos(this.riddenByEntity.rotationYaw * (float)Math.PI / 180.0F);
-+					this.motionX = var5 * -0.05D;
-+					this.motionZ = var5a * -0.05D;
++
++					if (var11 == 1 || var11 == 4 || var11 == 5) {
++						float bak = var5;
++						var5 = var5a;
++						var5a = bak;
++					}
++
++					this.motionX = var5 * 0.05D;
++					this.motionZ = var5a * 0.05D;
 +				}
 +
  				if(((BlockRail)Block.blocksList[var9]).getIsPowered()) {
  					var11 &= 7;
  				}
-@@ -261,14 +280,18 @@
+@@ -229,22 +260,6 @@
+ 					this.posY = (double)(var2 + 1);
+ 				}
+ 
+-				if(var11 == 2) {
+-					this.motionX -= var7;
+-				}
+-
+-				if(var11 == 3) {
+-					this.motionX += var7;
+-				}
+-
+-				if(var11 == 4) {
+-					this.motionZ += var7;
+-				}
+-
+-				if(var11 == 5) {
+-					this.motionZ -= var7;
+-				}
+-
+ 				int[][] var14 = field_855_j[var11];
+ 				double var15 = (double)(var14[1][0] - var14[0][0]);
+ 				double var17 = (double)(var14[1][2] - var14[0][2]);
+@@ -261,14 +276,18 @@
  				double var25;
  				if(var13) {
  					var25 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
@@ -8627,16 +8761,16 @@
  					}
  				}
  
-@@ -396,7 +419,7 @@
+@@ -396,7 +415,7 @@
  				if(var12) {
  					var42 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
  					if(var42 > 0.01D) {
 -						double var44 = 0.06D;
-+						double var44 = 0.01D;
++						double var44 = this.slow ? 0.0075D : 0.01D;
  						this.motionX += this.motionX / var42 * var44;
  						this.motionZ += this.motionZ / var42 * var44;
  					} else if(var11 == 1) {
-@@ -754,7 +777,7 @@
+@@ -754,7 +773,7 @@
  	}
  
  	public int getInventoryStackLimit() {
@@ -8885,3 +9019,14 @@
  		super.drawScreen(var1, var2, var3);
  	}
  }
+--- net/minecraft/src/BlockGlass.java
++++ net/minecraft/src/BlockGlass.java
+@@ -8,7 +8,7 @@
+ 	}
+ 
+ 	public int quantityDropped(Random var1) {
+-		return 0;
++		return 1;
+ 	}
+ 
+ 	public int getRenderBlockPass() {
